@@ -1,4 +1,8 @@
 import re
+import nltk
+nltk.download('punkt')
+import string
+
 
 # Function to preprocess a text file
 def preprocess_text_file(input_file, output_file):
@@ -22,3 +26,31 @@ def preprocess_text_file(input_file, output_file):
         file.write(text)
 
 
+def tokenization(input_file):
+# Opening the text-converted book.
+    file = open( input_file, encoding = 'utf-8' )
+
+    listofwords = file.read().splitlines()
+
+    listofwords = [i for i in listofwords if i != ' ']
+
+    text = " "
+
+    text = text.join(listofwords)
+
+# Defining string which contains the punctuations which have ot be ignored.
+    punctuations = string.punctuation
+
+    filteredtext = ""
+
+    for i in text:
+        if i not in punctuations:
+            filteredtext = filteredtext + i
+    
+# Converting the result to lower-case
+    filteredtext = filteredtext.lower()
+    tokenisedtext = nltk.tokenize.word_tokenize(filteredtext)
+    print( tokenisedtext[:10]) # This prints out the first 10 tokens of the filtered text.
+
+
+tokenization("preprocessed.txt")
